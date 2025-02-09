@@ -1,0 +1,137 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Paypal";
+}
+@inject IHttpContextAccessor contxt;
+
+<div>
+    <div class="container">
+        <form id="form" method="post">  
+            <div>
+                  <div>
+                    <input type="text" id="Id" />
+                </div>  
+                <div>
+                    <label for="class">Item Name</label>
+                    <select class="form-select" type="text" id="itemname" onchange="Price()">
+                        <option value="">select</option> 
+                    </select> 
+                 </div> 
+
+                <div>
+                    <label for="eml">Price</label>
+                    <input class="form-control" type="text" id="price"  />
+                </div>
+                <div>
+                    <label for="eml">Quantity</label>
+                    <input class="form-control" type="text" id="qntity" />
+                </div>
+                <div>
+                    <label for="eml">Actuall Price</label>
+                    <input class="form-control" type="text" id="actprice" onclick="actualprice()" />
+                </div>
+             
+
+
+                <div class="col m-4">
+                    <input class="btn btn-primary" type="button" id="save" value="Pay" onclick="Insert()" />
+                </div>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">already have account?</a>
+
+            </div>
+
+        </form>
+        <div id="table"></div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+     ItemName();
+     function ItemName()
+    {
+      $.ajax({
+            url: "/Signin/Itemname",
+            method: 'GET',
+            dataType: 'JSON',
+            success: function (data)
+            {
+                $("#itemname").html(data.success);
+            }
+      });
+    }
+      function Price() {
+           var id = $('#itemname').val();
+    
+         $.ajax({
+             url: '/Signin/price?id=' + id,
+             method: 'GET',
+             dataType: 'JSON',
+             success: function (data) {
+                
+                 $("#price").val(data.success);
+  
+             }
+         });
+     }
+     function actualprice()
+     {
+      var price = parseFloat($("#price").val());
+           var quantity = parseInt($("#qntity").val())
+           var actualPrice = price * quantity;
+
+           if (quantity <= 0) {
+              alert("Please enter a valid quantity.");
+              return;
+           }
+            $("#actprice").val(actualPrice);
+     }
+       
+    function Insert()
+    {
+
+          
+
+           
+
+        var insert =
+        {
+            'ItemID': $("#itemname").val(),
+       
+            'Price': $("#price").val(),
+            'Quantity': $("#qntity").val(),
+       
+            'Actualprice': $("#actprice").val(),
+           
+        }
+        $.ajax({
+            url: "/Signin/Pay",
+            method: "POST",
+            dataType: 'JSON',
+            data: insert,
+            success: function (data)
+            {
+                if (data.success == true)
+                {
+                    alert("data stored");
+                    $("#itemname").val("");
+                    $("#price").val("");
+                    $("#qntity").val("");
+                    $("#actprice").val("");
+                  
+                }
+                else
+                {
+                    alert("data not added");
+                }
+
+            }
+        });
+    }
+
+
+</script>

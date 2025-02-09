@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="gallery.css"> 
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+        </ul>
+    </nav>
+    <section class="gallery">
+        <h1>Photo Gallery</h1>
+        <div class="gallery-container">
+            <img src="images/rest.jpg" alt="Restaurant Image 1" onclick="openModal(this)">
+            <img src="images/rest1.jpg" alt="Restaurant Image 2" onclick="openModal(this)">
+            <img src="images/rest2.jpg" alt="Restaurant Image 3" onclick="openModal(this)">
+            <img src="images/rest4.jpg" alt="Restaurant Image 4" onclick="openModal(this)">
+            <img src="images/rest3.jpg" alt="Restaurant Image 4" onclick="openModal(this)">
+            <img src="images/rest5.jpg" alt="Restaurant Image 4" onclick="openModal(this)">
+            <img src="images/rest6.jpg" alt="Restaurant Image 4" onclick="openModal(this)">
+            <img src="images/rest7.jpg" alt="Restaurant Image 4" onclick="openModal(this)">
+            <img src="images/rest8.jpg" alt="Restaurant Image 4" onclick="openModal(this)">
+            <img src="images/rest9.jpg" alt="Restaurant Image 4" onclick="openModal(this)">
+        </div>
+    </section>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <script>
+        function openModal(img) {
+            document.getElementById("imageModal").style.display = "block";
+            document.getElementById("modalImg").src = img.src;
+        }
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
